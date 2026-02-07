@@ -2,130 +2,13 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Sevgiline Özel Site Oluştur</title>
+<title>❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body{
 margin:0;
 height:100vh;
 background:radial-gradient(circle at top,#2a0014,#000);
-display:flex;
-align-items:center;
-justify-content:center;
-font-family:Segoe UI,Arial,sans-serif;
-color:#fff
-}
-.card{
-background:linear-gradient(160deg,#14000a,#220011);
-padding:35px;
-border-radius:22px;
-width:90%;
-max-width:440px;
-text-align:center;
-box-shadow:0 0 40px rgba(255,40,100,.35)
-}
-input,select,textarea{
-width:100%;
-padding:14px;
-margin-top:14px;
-border-radius:14px;
-border:none;
-font-size:15px
-}
-textarea{resize:none;height:70px}
-button{
-margin-top:18px;
-padding:14px 30px;
-border-radius:14px;
-border:none;
-font-size:17px;
-cursor:pointer;
-background:linear-gradient(135deg,#ff2f6d,#ff5fa2);
-color:#fff
-}
-label{
-display:block;
-margin-top:12px;
-font-size:14px;
-opacity:.9;
-text-align:left
-}
-#instaWarn{
-display:none;
-color:#ffb3c7;
-font-size:13px;
-margin-bottom:10px
-}
-</style>
-</head>
-<body>
-
-<div class="card">
-<h2>Sevgiline Özel Site</h2>
-
-<div id="instaWarn">
-Instagram içinden indirme çalışmaz.<br>
-Sağ üstten <b>Tarayıcıda Aç</b>
-</div>
-
-<input id="name" placeholder="Sevgilinin adı">
-
-<label>Tema</label>
-<select id="theme">
-<option value="red">Kırmızı</option>
-<option value="purple">Mor</option>
-<option value="blue">Mavi</option>
-<option value="dark">Siyah</option>
-</select>
-
-<label>Özel Mesaj</label>
-<textarea id="message" placeholder="Kalbim hep senin..."></textarea>
-
-<label>
-<input type="checkbox" id="music"> Arka plan müziği ekle
-</label>
-
-<button onclick="generate()">HTML'yi İndir</button>
-</div>
-
-<script>
-const isInstagram = navigator.userAgent.includes("Instagram");
-if(isInstagram){
-document.getElementById("instaWarn").style.display="block";
-}
-
-function generate(){
-if(isInstagram){
-alert("Instagram içinden indirme çalışmaz.\nSağ üstten Tarayıcıda Aç deyin.");
-return;
-}
-
-const name=document.getElementById("name").value.trim();
-if(!name) return;
-
-const theme=document.getElementById("theme").value;
-const msg=document.getElementById("message").value || "Kalbim zaten senin… ❤️";
-const music=document.getElementById("music").checked;
-
-const themes={
-red:["#2a0014","#ff2f6d"],
-purple:["#1a002a","#b44cff"],
-blue:["#001b2a","#3fa9ff"],
-dark:["#000","#777"]
-};
-const bg=themes[theme];
-
-const html=`<!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<title>${name} ❤️</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body{
-margin:0;
-height:100vh;
-background:radial-gradient(circle at top,${bg[0]},#000);
 font-family:Segoe UI,Arial,sans-serif;
 color:#fff;
 overflow:hidden
@@ -139,13 +22,14 @@ background:rgba(0,0,0,.45);
 padding:35px;
 border-radius:22px;
 width:90%;
-max-width:460px;
+max-width:480px;
 text-align:center;
-box-shadow:0 0 40px ${bg[1]}
+box-shadow:0 0 45px #ff2f6d
 }
 .q{
-font-size:20px;
-line-height:1.4
+font-size:21px;
+line-height:1.5;
+min-height:90px
 }
 button{
 margin-top:25px;
@@ -156,15 +40,30 @@ font-size:16px;
 cursor:pointer
 }
 .next{
-background:${bg[1]};
+background:#ff2f6d;
 color:#fff
 }
-.yes{background:${bg[1]};color:#fff}
-.no{background:#333;color:#aaa;position:absolute}
+#yn{
+position:relative;
+height:80px;
+margin-top:20px
+}
+.yes{
+left:15%;
+background:#ff2f6d;
+color:#fff;
+position:absolute
+}
+.no{
+left:60%;
+background:#333;
+color:#aaa;
+position:absolute
+}
 .result{
 margin-top:25px;
 font-size:22px;
-color:${bg[1]};
+color:#ff5fa2;
 font-weight:600
 }
 </style>
@@ -173,38 +72,44 @@ font-weight:600
 
 <div class="card">
 <div id="q" class="q"></div>
+
 <button id="btn" class="next">Devam Et</button>
+
 <div id="yn" style="display:none">
 <button class="yes" id="yes">Evet</button>
 <button class="no" id="no">Hayır</button>
 </div>
+
 <div id="res" class="result"></div>
 </div>
 
-${music ? '<audio autoplay loop src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1.mp3?filename=romantic-ambient-110624.mp3"></audio>' : ''}
-
 <script>
 const questions=[
-"${name}, hiç fark ettin mi, bazı insanların gülüşü insanın içini nasıl ısıtıyor?",
-"Bazen durup dururken seni düşününce kalbimin hızlandığını biliyor musun?",
-"Yanımda olmasan bile seni hissetmek bana güven veriyor.",
-"Geleceği hayal ederken kendimi hep seninle görüyorum.",
-"Sence de bazı bağlar kelimelerle anlatılamayacak kadar derin değil mi?",
-"Hayat zorlaştığında bile sen aklıma gelince her şey biraz daha kolay oluyor.",
-"Kalbimin sana alıştığını, senden vazgeçemeyeceğini biliyor muydun?",
-"Şimdi sana en önemli şeyi soracağım…"
+"Hiç fark ettin mi, bazı insanların sesi bile insanın içini sakinleştirir…",
+"Bazen durup dururken seni düşününce gülümsediğimi biliyor musun?",
+"Yanımda olmasan bile seni hissetmek bana güç veriyor.",
+"Hayat zorlaştığında aklıma ilk sen geliyorsun.",
+"Geleceği hayal ettiğimde kendimi hep seninle görüyorum.",
+"Şimdi sana en önemli şeyi soracağım…",
+"❤️ Beni seviyor musun?"
 ];
 
 let i=0;
 const q=document.getElementById("q");
 const btn=document.getElementById("btn");
 const yn=document.getElementById("yn");
+
 q.textContent=questions[0];
 
 btn.onclick=()=>{
 i++;
-if(i<questions.length){
+
+if(i < questions.length){
 q.textContent=questions[i];
+
+if(i === questions.length - 1){
+btn.textContent="Cevapla";
+}
 }else{
 btn.style.display="none";
 yn.style.display="block";
@@ -220,30 +125,9 @@ no.onmouseenter=move;
 no.ontouchstart=e=>{e.preventDefault();move()};
 
 document.getElementById("yes").onclick=()=>{
-document.getElementById("res").textContent="${msg}";
+document.getElementById("res").textContent="Kalbim zaten senin… ❤️";
 yn.style.display="none";
 };
-<\/script>
-
-</body>
-</html>`;
-
-const blob=new Blob([html],{type:"text/html"});
-const url=URL.createObjectURL(blob);
-
-if(/iPhone|iPad|iPod/i.test(navigator.userAgent)){
-window.open(url,"_blank");
-return;
-}
-
-const a=document.createElement("a");
-a.href=url;
-a.download=name.toLowerCase()+"-ozel.html";
-document.body.appendChild(a);
-a.click();
-document.body.removeChild(a);
-URL.revokeObjectURL(url);
-}
 </script>
 
 </body>
