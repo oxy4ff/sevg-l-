@@ -2,7 +2,126 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>❤️</title>
+<title>Sevgiline Özel Site Oluştur</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+margin:0;
+height:100vh;
+background:radial-gradient(circle at top,#2a0014,#000);
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:Segoe UI,Arial,sans-serif;
+color:#fff
+}
+.card{
+background:linear-gradient(160deg,#14000a,#220011);
+padding:35px;
+border-radius:22px;
+width:90%;
+max-width:440px;
+text-align:center;
+box-shadow:0 0 40px rgba(255,40,100,.35)
+}
+input,select,textarea{
+width:100%;
+padding:14px;
+margin-top:14px;
+border-radius:14px;
+border:none;
+font-size:15px
+}
+textarea{resize:none;height:70px}
+button{
+margin-top:18px;
+padding:14px 30px;
+border-radius:14px;
+border:none;
+font-size:17px;
+cursor:pointer;
+background:linear-gradient(135deg,#ff2f6d,#ff5fa2);
+color:#fff
+}
+label{
+display:block;
+margin-top:12px;
+font-size:14px;
+opacity:.9;
+text-align:left
+}
+.creator-mark{
+position:fixed;
+left:14px;
+bottom:14px;
+font-size:14px;
+color:#ff5fa2;
+opacity:.85;
+pointer-events:none
+}
+#instaWarn{
+display:none;
+font-size:13px;
+color:#ffb3c7;
+margin-bottom:10px
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+<h2>Sevgiline Özel Site</h2>
+
+<div id="instaWarn">
+Instagram içinden indirme çalışmaz.<br>
+Sağ üstten <b>Tarayıcıda Aç</b>
+</div>
+
+<input id="name" placeholder="Sevgilinin adı">
+
+<label>Tema</label>
+<select id="theme">
+<option value="red">Kırmızı</option>
+<option value="purple">Mor</option>
+<option value="blue">Mavi</option>
+<option value="dark">Siyah</option>
+</select>
+
+<label>Özel Mesaj</label>
+<textarea id="message" placeholder="Kalbim hep senin..."></textarea>
+
+<label>
+<input type="checkbox" id="music"> Arka plan müziği ekle
+</label>
+
+<button onclick="generate()">HTML'yi İndir</button>
+</div>
+
+<div class="creator-mark">berfinimmm ❤️</div>
+
+<script>
+const isInstagram=navigator.userAgent.includes("Instagram");
+if(isInstagram){
+document.getElementById("instaWarn").style.display="block";
+}
+
+function generate(){
+if(isInstagram){
+alert("Instagram içinden indirme çalışmaz.\nTarayıcıda aç.");
+return;
+}
+
+const name=document.getElementById("name").value.trim();
+if(!name) return;
+
+const msg=document.getElementById("message").value || "Kalbim zaten senin… ❤️";
+const music=document.getElementById("music").checked;
+
+const html=`<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>${name} ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body{
@@ -39,57 +158,34 @@ border:none;
 font-size:16px;
 cursor:pointer
 }
-.next{
-background:#ff2f6d;
-color:#fff
-}
-#yn{
-position:relative;
-height:80px;
-margin-top:20px
-}
-.yes{
-left:15%;
-background:#ff2f6d;
-color:#fff;
-position:absolute
-}
-.no{
-left:60%;
-background:#333;
-color:#aaa;
-position:absolute
-}
-.result{
-margin-top:25px;
-font-size:22px;
-color:#ff5fa2;
-font-weight:600
-}
+.next{background:#ff2f6d;color:#fff}
+#yn{display:none;position:relative;height:80px;margin-top:20px}
+.yes{left:15%;background:#ff2f6d;color:#fff;position:absolute}
+.no{left:60%;background:#333;color:#aaa;position:absolute}
+.result{margin-top:25px;font-size:22px;color:#ff5fa2;font-weight:600}
 </style>
 </head>
 <body>
 
 <div class="card">
 <div id="q" class="q"></div>
-
 <button id="btn" class="next">Devam Et</button>
-
-<div id="yn" style="display:none">
+<div id="yn">
 <button class="yes" id="yes">Evet</button>
 <button class="no" id="no">Hayır</button>
 </div>
-
 <div id="res" class="result"></div>
 </div>
 
+${music ? '<audio autoplay loop src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1.mp3?filename=romantic-ambient-110624.mp3"></audio>' : ''}
+
 <script>
 const questions=[
-"Hiç fark ettin mi, bazı insanların sesi bile insanın içini sakinleştirir…",
-"Bazen durup dururken seni düşününce gülümsediğimi biliyor musun?",
-"Yanımda olmasan bile seni hissetmek bana güç veriyor.",
-"Hayat zorlaştığında aklıma ilk sen geliyorsun.",
-"Geleceği hayal ettiğimde kendimi hep seninle görüyorum.",
+"${name}, hiç fark ettin mi bazı insanların gülüşü insanın içini nasıl ısıtıyor?",
+"Bazen seni düşünürken fark etmeden gülümsüyorum.",
+"Yanımda olmasan bile seni hissetmek bana güven veriyor.",
+"Hayat zorlaştığında bile aklıma ilk sen geliyorsun.",
+"Geleceği hayal ederken kendimi hep seninle görüyorum.",
 "Şimdi sana en önemli şeyi soracağım…",
 "❤️ Beni seviyor musun?"
 ];
@@ -98,18 +194,13 @@ let i=0;
 const q=document.getElementById("q");
 const btn=document.getElementById("btn");
 const yn=document.getElementById("yn");
-
 q.textContent=questions[0];
 
 btn.onclick=()=>{
 i++;
-
-if(i < questions.length){
+if(i<questions.length){
 q.textContent=questions[i];
-
-if(i === questions.length - 1){
-btn.textContent="Cevapla";
-}
+if(i===questions.length-1) btn.textContent="Cevapla";
 }else{
 btn.style.display="none";
 yn.style.display="block";
@@ -125,9 +216,22 @@ no.onmouseenter=move;
 no.ontouchstart=e=>{e.preventDefault();move()};
 
 document.getElementById("yes").onclick=()=>{
-document.getElementById("res").textContent="Kalbim zaten senin… ❤️";
+document.getElementById("res").textContent="${msg}";
 yn.style.display="none";
 };
+<\/script>
+
+</body>
+</html>`;
+
+const blob=new Blob([html],{type:"text/html"});
+const url=URL.createObjectURL(blob);
+const a=document.createElement("a");
+a.href=url;
+a.download=name.toLowerCase()+"-ozel.html";
+a.click();
+URL.revokeObjectURL(url);
+}
 </script>
 
 </body>
