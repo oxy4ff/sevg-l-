@@ -4,98 +4,127 @@
 <meta charset="UTF-8">
 <title>Sevgiline Özel Site Oluştur</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body{
-margin:0;
-height:100vh;
-background:radial-gradient(circle at top,#2a0014,#000);
-display:flex;
-align-items:center;
-justify-content:center;
-font-family:Segoe UI,Arial,sans-serif;
-color:#fff
+    margin:0;
+    height:100vh;
+    background:radial-gradient(circle at top,#2a0014,#000);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:Segoe UI,Arial,sans-serif;
+    color:#fff;
+    overflow:hidden;
 }
+
 .card{
-background:linear-gradient(160deg,#14000a,#220011);
-padding:35px;
-border-radius:22px;
-width:90%;
-max-width:440px;
-text-align:center;
-box-shadow:0 0 40px rgba(255,40,100,.35)
+    background:linear-gradient(160deg,#14000a,#220011);
+    padding:35px;
+    border-radius:22px;
+    width:90%;
+    max-width:440px;
+    text-align:center;
+    box-shadow:0 0 40px rgba(255,40,100,.35);
+    z-index:2;
 }
+
 input,select,textarea{
-width:100%;
-padding:14px;
-margin-top:14px;
-border-radius:14px;
-border:none;
-font-size:15px
+    width:100%;
+    padding:14px;
+    margin-top:14px;
+    border-radius:14px;
+    border:none;
+    font-size:15px;
 }
-textarea{resize:none;height:70px}
+
+textarea{
+    resize:none;
+    height:70px;
+}
+
 button{
-margin-top:18px;
-padding:14px 30px;
-border-radius:14px;
-border:none;
-font-size:17px;
-cursor:pointer;
-background:linear-gradient(135deg,#ff2f6d,#ff5fa2);
-color:#fff
+    margin-top:18px;
+    padding:14px 30px;
+    border-radius:14px;
+    border:none;
+    font-size:17px;
+    cursor:pointer;
+    background:linear-gradient(135deg,#ff2f6d,#ff5fa2);
+    color:#fff;
 }
+
 label{
-display:block;
-margin-top:12px;
-font-size:14px;
-opacity:.9;
-text-align:left
+    display:block;
+    margin-top:12px;
+    font-size:14px;
+    opacity:.9;
+    text-align:left;
+}
+
+/* SOL ALT – SADECE OLUŞTURMA EKRANI */
+.corner-love{
+    position:fixed;
+    left:14px;
+    bottom:14px;
+    z-index:9999;
+    font-size:15px;
+    font-weight:600;
+    color:#ff4f8b;
+    opacity:.85;
+    text-shadow:0 0 12px rgba(255,79,139,.7);
+    user-select:none;
+    pointer-events:none;
 }
 </style>
 </head>
+
 <body>
 
+<div class="corner-love">Berfinimmmm ❤️</div>
+
 <div class="card">
-<h2>Sevgiline Özel Site</h2>
+    <h2>Sevgiline Özel Site</h2>
 
-<input id="name" placeholder="Sevgilinin adı">
+    <input id="name" placeholder="Sevgilinin adı">
 
-<label>Tema</label>
-<select id="theme">
-<option value="red">Kırmızı</option>
-<option value="purple">Mor</option>
-<option value="blue">Mavi</option>
-<option value="dark">Siyah</option>
-</select>
+    <label>Tema</label>
+    <select id="theme">
+        <option value="red">Kırmızı</option>
+        <option value="purple">Mor</option>
+        <option value="blue">Mavi</option>
+        <option value="dark">Siyah</option>
+    </select>
 
-<label>Özel Mesaj</label>
-<textarea id="message" placeholder="Kalbim hep senin..."></textarea>
+    <label>Özel Mesaj</label>
+    <textarea id="message" placeholder="Kalbim hep senin..."></textarea>
 
-<label>
-<input type="checkbox" id="music"> Arka plan müziği ekle
-</label>
+    <label>
+        <input type="checkbox" id="music"> Arka plan müziği ekle
+    </label>
 
-<button onclick="generate()">HTML'yi İndir</button>
+    <button onclick="generate()">HTML'yi İndir</button>
 </div>
 
 <script>
 function generate(){
-const name=document.getElementById("name").value.trim();
-if(!name) return;
+    const name = document.getElementById("name").value.trim();
+    if(!name) return;
 
-const theme=document.getElementById("theme").value;
-const msg=document.getElementById("message").value || "Kalbim zaten senin… ❤️";
-const music=document.getElementById("music").checked;
+    const theme = document.getElementById("theme").value;
+    const msg = document.getElementById("message").value || "Kalbim zaten senin… ❤️";
+    const music = document.getElementById("music").checked;
 
-const themes={
-red:["#2a0014","#ff2f6d"],
-purple:["#1a002a","#b44cff"],
-blue:["#001b2a","#3fa9ff"],
-dark:["#000","#555"]
-};
+    const themes = {
+        red:["#2a0014","#ff2f6d"],
+        purple:["#1a002a","#b44cff"],
+        blue:["#001b2a","#3fa9ff"],
+        dark:["#000","#555"]
+    };
 
-const bg=themes[theme];
+    const bg = themes[theme];
 
-const html=`<!DOCTYPE html>
+const html = `<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
@@ -120,25 +149,21 @@ animation:float 8s linear infinite
 }
 @keyframes float{
 from{transform:translateY(100vh);opacity:0}
-10%{opacity:1}
 to{transform:translateY(-10vh);opacity:0}
 }
 .card{
-position:relative;
-z-index:2;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
 background:linear-gradient(160deg,#14000a,#220011);
 border-radius:22px;
 padding:40px;
 width:90%;
 max-width:420px;
-margin:auto;
-top:50%;
-transform:translateY(-50%);
 text-align:center;
 box-shadow:0 0 40px ${bg[1]}
 }
-.big{font-size:72px;animation:pulse 1.6s infinite}
-@keyframes pulse{50%{transform:scale(1.15)}}
 .buttons{position:relative;height:90px;margin-top:25px}
 button{
 position:absolute;
@@ -172,7 +197,6 @@ font-weight:600
 <div class="hearts" id="hearts"></div>
 
 <div class="card">
-<div class="big">❤️</div>
 <h1>${name}, beni seviyor musun?</h1>
 
 <div class="buttons" id="buttons">
@@ -215,12 +239,23 @@ document.getElementById("result").textContent="${msg}";
 </body>
 </html>`;
 
-const blob=new Blob([html],{type:"text/html"});
-const a=document.createElement("a");
-a.href=URL.createObjectURL(blob);
-a.download=name.toLowerCase()+"-ozel.html";
-a.click();
-URL.revokeObjectURL(a.href);
+    const blob = new Blob([html], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+
+    /* iOS Safari fix */
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        window.open(url, "_blank");
+        return;
+    }
+
+    /* Android + PC */
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = name.toLowerCase() + "-ozel.html";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }
 </script>
 
