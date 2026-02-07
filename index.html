@@ -4,189 +4,166 @@
 <meta charset="UTF-8">
 <title>Sevgiline Özel Site Oluştur</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 body{
-    margin:0;
-    height:100vh;
-    background:radial-gradient(circle at top,#2a0014,#000);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:Segoe UI,Arial,sans-serif;
-    color:#fff;
-    overflow:hidden;
+margin:0;
+height:100vh;
+background:radial-gradient(circle at top,#2a0014,#000);
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:Segoe UI,Arial,sans-serif;
+color:#fff
 }
-
 .card{
-    background:linear-gradient(160deg,#14000a,#220011);
-    padding:35px;
-    border-radius:22px;
-    width:90%;
-    max-width:440px;
-    text-align:center;
-    box-shadow:0 0 40px rgba(255,40,100,.35);
-    z-index:2;
+background:linear-gradient(160deg,#14000a,#220011);
+padding:35px;
+border-radius:22px;
+width:90%;
+max-width:440px;
+text-align:center;
+box-shadow:0 0 40px rgba(255,40,100,.35)
 }
-
 input,select,textarea{
-    width:100%;
-    padding:14px;
-    margin-top:14px;
-    border-radius:14px;
-    border:none;
-    font-size:15px;
+width:100%;
+padding:14px;
+margin-top:14px;
+border-radius:14px;
+border:none;
+font-size:15px
 }
-
-textarea{
-    resize:none;
-    height:70px;
-}
-
+textarea{resize:none;height:70px}
 button{
-    margin-top:18px;
-    padding:14px 30px;
-    border-radius:14px;
-    border:none;
-    font-size:17px;
-    cursor:pointer;
-    background:linear-gradient(135deg,#ff2f6d,#ff5fa2);
-    color:#fff;
+margin-top:18px;
+padding:14px 30px;
+border-radius:14px;
+border:none;
+font-size:17px;
+cursor:pointer;
+background:linear-gradient(135deg,#ff2f6d,#ff5fa2);
+color:#fff
 }
-
 label{
-    display:block;
-    margin-top:12px;
-    font-size:14px;
-    opacity:.9;
-    text-align:left;
+display:block;
+margin-top:12px;
+font-size:14px;
+opacity:.9;
+text-align:left
 }
-
-/* SOL ALT – SADECE OLUŞTURMA EKRANI */
-.corner-love{
-    position:fixed;
-    left:14px;
-    bottom:14px;
-    z-index:9999;
-    font-size:15px;
-    font-weight:600;
-    color:#ff4f8b;
-    opacity:.85;
-    text-shadow:0 0 12px rgba(255,79,139,.7);
-    user-select:none;
-    pointer-events:none;
+#instaWarn{
+display:none;
+color:#ffb3c7;
+font-size:13px;
+margin-bottom:10px
 }
 </style>
 </head>
-
 <body>
 
-<div class="corner-love">Berfinimmmm ❤️</div>
-
 <div class="card">
-    <h2>Sevgiline Özel Site</h2>
+<h2>Sevgiline Özel Site</h2>
 
-    <input id="name" placeholder="Sevgilinin adı">
+<div id="instaWarn">
+Instagram içinden indirme çalışmaz.<br>
+Sağ üstten <b>Tarayıcıda Aç</b>
+</div>
 
-    <label>Tema</label>
-    <select id="theme">
-        <option value="red">Kırmızı</option>
-        <option value="purple">Mor</option>
-        <option value="blue">Mavi</option>
-        <option value="dark">Siyah</option>
-    </select>
+<input id="name" placeholder="Sevgilinin adı">
 
-    <label>Özel Mesaj</label>
-    <textarea id="message" placeholder="Kalbim hep senin..."></textarea>
+<label>Tema</label>
+<select id="theme">
+<option value="red">Kırmızı</option>
+<option value="purple">Mor</option>
+<option value="blue">Mavi</option>
+<option value="dark">Siyah</option>
+</select>
 
-    <label>
-        <input type="checkbox" id="music"> Arka plan müziği ekle
-    </label>
+<label>Özel Mesaj</label>
+<textarea id="message" placeholder="Kalbim hep senin..."></textarea>
 
-    <button onclick="generate()">Siteyi'yi İndir</button>
+<label>
+<input type="checkbox" id="music"> Arka plan müziği ekle
+</label>
+
+<button onclick="generate()">HTML'yi İndir</button>
 </div>
 
 <script>
+const isInstagram = navigator.userAgent.includes("Instagram");
+if(isInstagram){
+document.getElementById("instaWarn").style.display="block";
+}
+
 function generate(){
-    const name = document.getElementById("name").value.trim();
-    if(!name) return;
+if(isInstagram){
+alert("Instagram içinden indirme çalışmaz.\nSağ üstten Tarayıcıda Aç deyin.");
+return;
+}
 
-    const theme = document.getElementById("theme").value;
-    const msg = document.getElementById("message").value || "Kalbim zaten senin… ❤️";
-    const music = document.getElementById("music").checked;
+const name=document.getElementById("name").value.trim();
+if(!name) return;
 
-    const themes = {
-        red:["#2a0014","#ff2f6d"],
-        purple:["#1a002a","#b44cff"],
-        blue:["#001b2a","#3fa9ff"],
-        dark:["#000","#555"]
-    };
+const theme=document.getElementById("theme").value;
+const msg=document.getElementById("message").value || "Kalbim zaten senin… ❤️";
+const music=document.getElementById("music").checked;
 
-    const bg = themes[theme];
+const themes={
+red:["#2a0014","#ff2f6d"],
+purple:["#1a002a","#b44cff"],
+blue:["#001b2a","#3fa9ff"],
+dark:["#000","#777"]
+};
+const bg=themes[theme];
 
-const html = `<!DOCTYPE html>
+const html=`<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <title>${name} ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-*{box-sizing:border-box}
 body{
 margin:0;
 height:100vh;
 background:radial-gradient(circle at top,${bg[0]},#000);
-overflow:hidden;
 font-family:Segoe UI,Arial,sans-serif;
-color:#fff
-}
-.hearts{position:fixed;inset:0;z-index:0}
-.heart{
-position:absolute;
-color:${bg[1]};
-opacity:.25;
-animation:float 8s linear infinite
-}
-@keyframes float{
-from{transform:translateY(100vh);opacity:0}
-to{transform:translateY(-10vh);opacity:0}
+color:#fff;
+overflow:hidden
 }
 .card{
 position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-background:linear-gradient(160deg,#14000a,#220011);
+background:rgba(0,0,0,.45);
+padding:35px;
 border-radius:22px;
-padding:40px;
 width:90%;
-max-width:420px;
+max-width:460px;
 text-align:center;
 box-shadow:0 0 40px ${bg[1]}
 }
-.buttons{position:relative;height:90px;margin-top:25px}
+.q{
+font-size:20px;
+line-height:1.4
+}
 button{
-position:absolute;
-top:0;
+margin-top:25px;
 padding:14px 30px;
-border:none;
 border-radius:14px;
-font-size:17px;
+border:none;
+font-size:16px;
 cursor:pointer
 }
-#yes{
-left:15%;
+.next{
 background:${bg[1]};
 color:#fff
 }
-#no{
-left:60%;
-background:#333;
-color:#ccc
-}
+.yes{background:${bg[1]};color:#fff}
+.no{background:#333;color:#aaa;position:absolute}
 .result{
 margin-top:25px;
-font-size:20px;
+font-size:22px;
 color:${bg[1]};
 font-weight:600
 }
@@ -194,71 +171,80 @@ font-weight:600
 </head>
 <body>
 
-<div class="hearts" id="hearts"></div>
-
 <div class="card">
-<h1>${name}, beni seviyor musun?</h1>
-
-<div class="buttons" id="buttons">
-<button id="yes">Evet</button>
-<button id="no">Hayır</button>
+<div id="q" class="q"></div>
+<button id="btn" class="next">Devam Et</button>
+<div id="yn" style="display:none">
+<button class="yes" id="yes">Evet</button>
+<button class="no" id="no">Hayır</button>
+</div>
+<div id="res" class="result"></div>
 </div>
 
-<div class="result" id="result"></div>
-</div>
-
-${music ? '<audio src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1.mp3?filename=romantic-ambient-110624.mp3" autoplay loop></audio>' : ''}
+${music ? '<audio autoplay loop src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1.mp3?filename=romantic-ambient-110624.mp3"></audio>' : ''}
 
 <script>
-const hearts=document.getElementById("hearts");
-const chars=["❤️","💖","💗","💘","💞"];
-setInterval(()=>{
-const h=document.createElement("div");
-h.className="heart";
-h.textContent=chars[Math.floor(Math.random()*chars.length)];
-h.style.left=Math.random()*100+"vw";
-h.style.fontSize=14+Math.random()*26+"px";
-hearts.appendChild(h);
-setTimeout(()=>h.remove(),12000);
-},300);
+const questions=[
+"${name}, hiç fark ettin mi, bazı insanların gülüşü insanın içini nasıl ısıtıyor?",
+"Bazen durup dururken seni düşününce kalbimin hızlandığını biliyor musun?",
+"Yanımda olmasan bile seni hissetmek bana güven veriyor.",
+"Geleceği hayal ederken kendimi hep seninle görüyorum.",
+"Sence de bazı bağlar kelimelerle anlatılamayacak kadar derin değil mi?",
+"Hayat zorlaştığında bile sen aklıma gelince her şey biraz daha kolay oluyor.",
+"Kalbimin sana alıştığını, senden vazgeçemeyeceğini biliyor muydun?",
+"Şimdi sana en önemli şeyi soracağım…"
+];
+
+let i=0;
+const q=document.getElementById("q");
+const btn=document.getElementById("btn");
+const yn=document.getElementById("yn");
+q.textContent=questions[0];
+
+btn.onclick=()=>{
+i++;
+if(i<questions.length){
+q.textContent=questions[i];
+}else{
+btn.style.display="none";
+yn.style.display="block";
+}
+};
 
 const no=document.getElementById("no");
-const btns=document.getElementById("buttons");
 function move(){
-const max=btns.offsetWidth-no.offsetWidth;
-no.style.left=Math.random()*max+"px";
+no.style.left=Math.random()*60+"%";
+no.style.top=Math.random()*40+"px";
 }
-no.addEventListener("mouseenter",move);
-no.addEventListener("touchstart",e=>{e.preventDefault();move()});
+no.onmouseenter=move;
+no.ontouchstart=e=>{e.preventDefault();move()};
 
 document.getElementById("yes").onclick=()=>{
-document.getElementById("result").textContent="${msg}";
+document.getElementById("res").textContent="${msg}";
+yn.style.display="none";
 };
 <\/script>
 
 </body>
 </html>`;
 
-    const blob = new Blob([html], { type: "text/html" });
-    const url = URL.createObjectURL(blob);
+const blob=new Blob([html],{type:"text/html"});
+const url=URL.createObjectURL(blob);
 
-    /* iOS Safari fix */
-    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        window.open(url, "_blank");
-        return;
-    }
+if(/iPhone|iPad|iPod/i.test(navigator.userAgent)){
+window.open(url,"_blank");
+return;
+}
 
-    /* Android + PC */
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = name.toLowerCase() + "-ozel.html";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+const a=document.createElement("a");
+a.href=url;
+a.download=name.toLowerCase()+"-ozel.html";
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+URL.revokeObjectURL(url);
 }
 </script>
 
 </body>
 </html>
-
